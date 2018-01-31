@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+ <item android:id="@+id/doubleroom"
+     android:title="Double room"/>
+    <item android:id="@+id/doubleroom1"
+     android:title="Family room"/>
+    <item android:id="@+id/doubleroom2"
+     android:title="Single  room"/>
+</menu>

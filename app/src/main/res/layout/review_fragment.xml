@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    >
+    
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:id="@+id/temp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/smallpadding"
+            android:layout_marginLeft="@dimen/normalpadding"
+            android:layout_marginRight="@dimen/smallpadding"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="3"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.7"
+                    android:text="RATING OVERVIEW"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:layout_gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/totalviews"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.8"
+                    android:text="38 Views"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/blue"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/custom_rectangle_blue"
+                    android:layout_gravity="center"
+                    >
+
+                    <TextView
+                        android:id="@+id/average"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="85"
+                        android:textSize="@dimen/normallargetextsize"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height" />
+
+            <LinearLayout
+                android:id="@+id/linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+
+
+            </LinearLayout>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/smallheight"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:weightSum="3"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:text="Location"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/locationreview"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.7"-->
+                    <!--android:layout_margin="@dimen/smallpadding"-->
+                    <!--android:background="@drawable/custom_text_background"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:weightSum="10"-->
+                    <!--&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/locationtext"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:text="8.5"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="@dimen/smallheight"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="@dimen/height"-->
+            <!--android:weightSum="3"-->
+            <!--&gt;-->
+
+            <!--<TextView-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="0.8"-->
+                <!--android:text="Rooms"-->
+                <!--android:gravity="center|left"-->
+                <!--android:textSize="@dimen/normaltextsize"-->
+                <!--android:textColor="@color/black"-->
+                <!--/>-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/roomreview"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1.7"-->
+                <!--android:layout_margin="@dimen/smallpadding"-->
+                <!--android:background="@drawable/custom_text_background"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:weightSum="10"-->
+                <!--&gt;-->
+
+            <!--</LinearLayout>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/roomtext"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="0.5"-->
+                <!--android:text="8.5"-->
+                <!--android:gravity="center"-->
+                <!--android:textSize="@dimen/normaltextsize"-->
+                <!--android:textColor="@color/black"-->
+                <!--/>-->
+
+        <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/smallheight"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="@dimen/height"-->
+                <!--android:weightSum="3"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:text="Service"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/serrvicereview"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.7"-->
+                    <!--android:layout_margin="@dimen/smallpadding"-->
+                    <!--android:background="@drawable/custom_text_background"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:weightSum="10"-->
+                    <!--&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/servicetext"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:text="8.5"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/smallheight"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="@dimen/height"-->
+                <!--android:weightSum="3"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:text="Cleanliness"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/cleanreview"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.7"-->
+                    <!--android:layout_margin="@dimen/smallpadding"-->
+                    <!--android:background="@drawable/custom_text_background"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:weightSum="10"-->
+                    <!--&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/cleantext"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:text="8.5"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/smallheight"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="@dimen/height"-->
+                <!--android:weightSum="3"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:text="Comfort"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/comfortreview"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.7"-->
+                    <!--android:layout_margin="@dimen/smallpadding"-->
+                    <!--android:background="@drawable/custom_text_background"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:weightSum="10"-->
+                    <!--&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/comforttext"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:text="8.5"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="@dimen/smallheight"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:layout_marginTop="@dimen/height"-->
+                <!--android:weightSum="3"-->
+                <!--&gt;-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.8"-->
+                    <!--android:text="Facilty"-->
+                    <!--android:gravity="center|left"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/facilityreview"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1.7"-->
+                    <!--android:layout_margin="@dimen/smallpadding"-->
+                    <!--android:background="@drawable/custom_text_background"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:weightSum="10"-->
+                    <!--&gt;-->
+
+                <!--</LinearLayout>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/facilitytext"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="0.5"-->
+                    <!--android:text="8.5"-->
+                    <!--android:gravity="center"-->
+                    <!--android:textSize="@dimen/normaltextsize"-->
+                    <!--android:textColor="@color/black"-->
+                    <!--/>-->
+
+            <!--</LinearLayout>-->
+            
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RECENT GUEST REVIEWS"
+                    android:textSize="@dimen/largetextsize"
+                    android:textColor="@color/black"
+                    
+                    />
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normalpadding" />
+            
+            <com.example.sanjay.traveljinee.NonScrollListView
+                android:id="@+id/guestreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>

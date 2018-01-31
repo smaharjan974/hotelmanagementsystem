@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/largepadding"
+    android:id="@+id/background"
+    android:background="@color/grey"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="@dimen/largepadding"
+        android:weightSum="3"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height50"
+                android:background="@drawable/custom_rectangle_blue"
+                android:layout_marginLeft="@dimen/largepadding"
+                android:layout_marginRight="@dimen/largepadding"
+                android:layout_marginTop="@dimen/largepadding"
+                android:layout_gravity="center"
+                >
+
+                <TextView
+                    android:id="@+id/rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="10"
+                    android:textSize="@dimen/extralargetextsize"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Erica"
+                android:gravity="center"
+                android:textSize="@dimen/largenormaltextsize"
+                android:textColor="@color/black"
+                android:layout_marginTop="@dimen/smallpadding"
+                />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sep 17"
+                android:gravity="center"
+                android:textSize="@dimen/normaltextsize"
+                android:textStyle="bold"
+                android:layout_marginTop="@dimen/smallpadding"
+                />
+
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="2.3"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_marginLeft="@dimen/normalpadding"-->
+            <!--&gt;-->
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2.3"
+            android:gravity="center"
+            android:text="Very Luxurious hote asfsfasdfa sdfsd asf asf sdfasf"
+            android:textColor="@color/black"
+            android:textSize="@dimen/extranormaltextsize" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/detail"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Beautiful hotel with great staff and very comfortable rooms. and maintained hotel standing next to lake. Good location and helpful staff."-->
+                <!--android:textSize="@dimen/normaltextsize"-->
+                <!--android:layout_marginTop="@dimen/normalpadding"-->
+                <!--android:textColor="@color/black"-->
+                <!--/>-->
+
+        <!--</LinearLayout>-->
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

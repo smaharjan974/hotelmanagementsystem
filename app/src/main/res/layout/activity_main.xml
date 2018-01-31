@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sanjay.traveljinee.Main.MainActivity"
+    android:orientation="vertical"
+    android:weightSum="4"
+    android:id="@+id/linear"
+    android:background="@drawable/travejinee">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:alpha="0.8"
+            android:background="@color/white"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2.6"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            >
+
+            <TextView
+                android:id="@+id/travel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9"
+                android:text="Travel"
+                android:textSize="@dimen/extralargetextsize"
+                android:textStyle="bold"
+                android:background="@color/white"
+                android:gravity="right|center"
+                android:textColor="@color/blue"
+                android:alpha="0.8"
+                android:fontFamily="@font/bodoni"
+
+                />
+
+            <TextView
+                android:id="@+id/jinee"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.1"
+                android:text="Jinee.com"
+                android:textSize="@dimen/extralargetextsize"
+                android:textStyle="bold"
+                android:gravity="left|center"
+                android:textColor="@color/red"
+                android:alpha="0.8"
+                android:fontFamily="@font/bodoni"
+                android:background="@color/white"
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2"
+            android:background="@color/white"
+            android:alpha="0.8"
+            />
+
+    </LinearLayout> //weight 1 out of 4
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/smallpadding"
+            android:orientation="vertical"
+            android:weightSum="4"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:layout_marginLeft="@dimen/normalpadding"
+                android:layout_marginRight="@dimen/normalpadding"
+                android:alpha="0.8"
+                >
+
+
+                    <AutoCompleteTextView
+                        android:id="@+id/location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="Address"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:background="@drawable/custom_textbox_without_corner"
+                        />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/normalpadding"
+                android:layout_marginLeft="@dimen/normalpadding"
+                android:layout_marginRight="@dimen/normalpadding"
+                android:weightSum="2"
+                android:orientation="horizontal"
+                >
+
+                <LinearLayout
+                    android:id="@+id/checkin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginRight="@dimen/normalpadding"
+                    android:background="@drawable/custom_textbox_without_corner"
+                    android:alpha="0.8"
+                    android:weightSum="2"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Check-in"
+                        android:textSize="@dimen/normaltextsize"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/datein"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="2017-02-08"
+                        android:textSize="@dimen/normaltextsize"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/checkout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/normalpadding"
+                    android:orientation="vertical"
+                    android:background="@drawable/custom_textbox_without_corner"
+                    android:alpha="0.8"
+                    android:weightSum="2"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="Check-in"
+                        android:textSize="@dimen/normaltextsize"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/dateout"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="2017-02-08"
+                        android:textSize="@dimen/normaltextsize"
+                        />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/select"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/normalpadding"
+                android:layout_weight="1"
+                android:background="@drawable/custom_textbox_without_corner"
+                android:orientation="horizontal"
+                android:alpha="0.8"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:id="@+id/rooms"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.98"
+                    android:alpha="0.8"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Room"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normaltextsize" />
+
+                    <TextView
+                        android:id="@+id/noofroom"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="1"
+                        android:textSize="@dimen/normaltextsize" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.02"
+                    android:background="@color/black"
+                    android:layout_marginTop="@dimen/largepadding"
+                    android:layout_marginBottom="@dimen/largepadding"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/adults"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.98"
+                    android:alpha="0.8"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Adults"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normaltextsize" />
+
+                    <TextView
+                        android:id="@+id/noofadult"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="1"
+                        android:textSize="@dimen/normaltextsize" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.02"
+                    android:background="@color/black"
+                    android:layout_marginTop="@dimen/largepadding"
+                    android:layout_marginBottom="@dimen/largepadding"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/child"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.98"
+                    android:alpha="0.8"
+                    android:orientation="vertical"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Children"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normaltextsize" />
+
+                    <TextView
+                        android:id="@+id/noofchild"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="@dimen/normaltextsize" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                android:layout_margin="@dimen/normalpadding"
+                android:background="@color/blue"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Search"
+                    android:textSize="@dimen/normallargetextsize"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"
+            android:background="@drawable/custom_text_box_with_stroke"
+            android:alpha="0.8"
+            >
+
+            <cn.trinea.android.view.autoscrollviewpager.AutoScrollViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:foregroundGravity="center"
+
+                />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

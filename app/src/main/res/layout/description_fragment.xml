@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/largepadding"
+        android:layout_marginRight="@dimen/largepadding"
+        android:layout_marginTop="@dimen/smallpadding"
+        android:focusable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.borjabravo.readmoretextview.ReadMoreTextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ideally located in the prime touristic area of Patan City, Traditional Homew Swotha Promises a relaxing and wonderful visit. Offering a variety of facilities and services, the hotel provides all you need for a good night's. Wifi in all rooms are there for a guest enjoyment. Guestrooms are designed to provide an optimal level of comfort with welcoming decor and some offering convenient amenities like complimentary bottled water, balcony/terrace, internet access. The hotel offers various recreational opportunities. A welcoming atmosphere and excellent service are what you can expect during your stay at traditional Homes Swotha."
+                android:textColor="@color/black"
+                android:textSize="@dimen/normaltextsize"
+                app:colorClickableText="@color/red"
+                app:showTrimExpandedText="true"
+                app:trimCollapsedText="@string/read_more"
+                app:trimExpandedText="@string/read_less"
+                app:trimLength="3" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/largepadding"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Top Amenities"
+                    android:textColor="@color/darkblue"
+                    android:textSize="@dimen/normaltextsize"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/smallpadding"
+                    android:weightSum="2">
+
+                    <com.example.sanjay.traveljinee.NonScrollListView
+                        android:id="@+id/amenities"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@color/white"
+                        android:dividerHeight="0dp"
+                        android:clickable="false"
+                        />
+
+                    <com.example.sanjay.traveljinee.NonScrollListView
+                        android:id="@+id/amenities2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:dividerHeight="0dp"
+                        android:clickable="false"
+                        android:divider="@color/white"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</android.support.v4.widget.NestedScrollView>

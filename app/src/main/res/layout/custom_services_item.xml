@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/height"
+    android:orientation="horizontal"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height"
+        android:layout_weight="0.1"
+        android:layout_marginTop="@dimen/smallpadding"
+        android:orientation="vertical"
+        >
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height"
+            android:foregroundGravity="center"
+            android:src="@drawable/icon_hotel_service"
+            />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/service"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/height"
+        android:layout_weight="0.9"
+        android:fontFamily="@font/abc"
+        android:text="asdfasdfasdfasdfsadf"
+        android:textSize="@dimen/extranormaltextsize"
+        android:layout_marginLeft="@dimen/largepadding"
+        android:gravity="center|left"
+        android:textColor="@color/black"
+        />
+</LinearLayout>

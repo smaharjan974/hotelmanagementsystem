@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="4"
+    >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height28"
+                android:text="Top Filters"
+                android:gravity="center"
+                android:textSize="@dimen/extranormaltextsize"
+                android:textColor="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/normalheight"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                >
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:orientation="horizontal"
+                   android:layout_margin="@dimen/largepadding"
+                   android:weightSum="5"
+                   >
+                   <LinearLayout
+                       android:id="@+id/onestar"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.85"
+                       android:background="@drawable/rectangle_blue"
+                       >
+
+                       <ImageView
+                           android:layout_width="match_parent"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/icon_star"
+                           android:padding="@dimen/largepadding"
+                           />
+
+                   </LinearLayout>
+
+                   <Space
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.19"/>
+
+                   <LinearLayout
+                       android:id="@+id/twostar"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.85"
+                       android:background="@drawable/rectangle_blue"
+                       android:orientation="horizontal"
+                       android:weightSum="2"
+                       >
+
+                       <ImageView
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:src="@drawable/icon_star"
+                           android:layout_weight="1"
+                           android:padding="@dimen/smallpadding"
+                           />
+
+                       <ImageView
+                           android:layout_width="0dp"
+                           android:layout_height="match_parent"
+                           android:layout_weight="1"
+                           android:src="@drawable/icon_star"
+                           android:padding="@dimen/smallpadding"
+                           />
+
+
+                   </LinearLayout>
+
+                   <Space
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.19"/>
+
+                   <LinearLayout
+                       android:id="@+id/threestar"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.85"
+                       android:background="@drawable/rectangle_blue"
+                       android:orientation="vertical"
+                       android:weightSum="2"
+                       >
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="0.99"
+                           >
+
+                           <ImageView
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:padding="@dimen/smallpadding"
+                               android:foregroundGravity="center"
+                               />
+
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1.01"
+                           android:orientation="horizontal"
+                           android:weightSum="2"
+                           >
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:layout_weight="1"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:src="@drawable/icon_star"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+
+                       </LinearLayout>
+
+
+                   </LinearLayout>
+
+                   <Space
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.19"/>
+
+                   <LinearLayout
+                       android:id="@+id/fourstar"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.85"
+                       android:background="@drawable/rectangle_blue"
+                       android:orientation="vertical"
+                       android:weightSum="2"
+                       >
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="0.99"
+                           android:orientation="horizontal"
+                           android:weightSum="2"
+                           >
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:layout_weight="1"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:src="@drawable/icon_star"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1.01"
+                           android:orientation="horizontal"
+                           android:weightSum="2"
+                           >
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:layout_weight="1"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:src="@drawable/icon_star"
+                               android:padding="@dimen/smallpadding"
+                               />
+
+
+                       </LinearLayout>
+
+
+                   </LinearLayout>
+
+                   <Space
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.19"/>
+
+                   <LinearLayout
+                       android:id="@+id/fivestar"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.85"
+                       android:background="@drawable/rectangle_blue"
+                       android:orientation="vertical"
+                       android:weightSum="3"
+                       >
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1"
+                           android:orientation="horizontal"
+                           >
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:layout_weight="1"
+                               android:padding="3dp"
+                               />
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:src="@drawable/icon_star"
+                               android:padding="3dp"
+                               />
+
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1">
+
+                           <ImageView
+                               android:layout_width="match_parent"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:foregroundGravity="center"
+                               android:padding="3dp"
+                               />
+
+                       </LinearLayout>
+
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="0dp"
+                           android:layout_weight="1"
+                           android:orientation="horizontal"
+                           android:weightSum="2"
+                           >
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:src="@drawable/icon_star"
+                               android:layout_weight="1"
+                               android:padding="3dp"
+                               />
+
+                           <ImageView
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="1"
+                               android:src="@drawable/icon_star"
+                               android:padding="3dp"
+                               />
+
+
+                       </LinearLayout>
+
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height28" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Max Price $."
+                        android:layout_marginTop="@dimen/largepadding"
+                        android:textSize="@dimen/normaltextsize"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="40"
+                        android:layout_marginLeft="@dimen/normalpadding"
+                        android:layout_marginTop="@dimen/largepadding"
+                        android:textSize="@dimen/normaltextsize"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+
+                <SeekBar
+                    android:id="@+id/priceseekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:min="40"
+                    android:max="500"
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/largepadding"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Max Distance miles"
+                        android:layout_marginTop="@dimen/largepadding"
+                        android:textSize="@dimen/normaltextsize"
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:layout_marginLeft="@dimen/normalpadding"
+                        android:layout_marginTop="@dimen/largepadding"
+                        android:textSize="@dimen/normaltextsize"
+                        android:textColor="@color/black"
+                        />
+
+                </LinearLayout>
+
+
+                <SeekBar
+                    android:id="@+id/distanceseekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:min="0"
+                    android:max="5"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Features "
+                    android:textSize="@dimen/largenormaltextsize"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/largepadding"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <com.example.sanjay.traveljinee.NonScrollListView
+                        android:id="@+id/features1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@color/white"
+                        android:dividerHeight="0dp" />
+
+                    <com.example.sanjay.traveljinee.NonScrollListView
+                        android:id="@+id/features2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:divider="@color/white"
+                        android:dividerHeight="0dp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Addres"
+                    android:textSize="@dimen/normaltextsize"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:textColor="@color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="Address"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hotel Name"
+                    android:textSize="@dimen/normaltextsize"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:textColor="@color/black"
+                    />
+
+                <EditText
+                    android:id="@+id/hotelname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:hint="hotel name"
+                    />
+
+                <android.support.v4.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height" />
+
+                <LinearLayout
+                    android:id="@+id/submit"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
+                    android:background="@color/blue"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="SEARCH"
+                        android:gravity="center"
+                        android:textSize="@dimen/normallargetextsize"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</LinearLayout>

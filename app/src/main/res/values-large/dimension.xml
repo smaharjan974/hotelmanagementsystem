@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    //textsize
+    <dimen name="normaltextsize">18sp</dimen>
+    <dimen name="extranormaltextsize">21sp</dimen>
+    <dimen name="largenormaltextsize">23sp</dimen>
+    <dimen name="largetextsize">26sp</dimen>
+    <dimen name="normallargetextsize">30sp</dimen>
+    <dimen name="extralargetextsize">45sp</dimen>
+
+    //height
+    <dimen name="collapsinglayoutheight">450dp</dimen>
+
+    //padding and margin
+    <dimen name="smallpadding">7dp</dimen>
+    <dimen name="normalpadding">9dp</dimen>
+    <dimen name="largepadding">12dp</dimen>
+    <dimen name="extralargepadding">68dp</dimen>
+
+    <dimen name="dividerheight">17dp</dimen>
+
+    //height
+    <dimen name="smallheight">20dp</dimen>
+    <dimen name="height">40dp</dimen>
+    <dimen name="height28">35dp</dimen>
+    <dimen name="height50">55dp</dimen>
+
+    <dimen name="normalheight">80dp</dimen>
+
+    <dimen name="largehegiht">150dp</dimen>
+    <dimen name="extralargeheight">250dp</dimen>
+</resources>
