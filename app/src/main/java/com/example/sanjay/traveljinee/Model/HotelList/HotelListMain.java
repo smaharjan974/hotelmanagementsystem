@@ -18,7 +18,7 @@ public class HotelListMain {
     private String message;
     @SerializedName("Data")
     @Expose
-    private List<HotelDetails> data = null;
+    private List<HotelDetail> data = null;
 
     public Integer getCode() {
         return code;
@@ -36,11 +36,11 @@ public class HotelListMain {
         this.message = message;
     }
 
-    public List<HotelDetails> getData() {
+    public List<HotelDetail> getData() {
         return data;
     }
 
-    public void setData(List<HotelDetails> data) {
+    public void setData(List<HotelDetail> data) {
         this.data = data;
     }
 }

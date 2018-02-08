@@ -1,5 +1,6 @@
 package com.example.sanjay.traveljinee.HotelList.Fragment.Details;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -41,10 +42,17 @@ public class DescriptionFragment extends Fragment {
 
     int hotelid;
     List<HotelFeatures> features;
+    ProgressDialog dialog;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.description_fragment, container, false);
+
+        dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setTitle("Loading");
+        dialog.setMessage("Loading Hotel List. Please Wait...");
+        dialog.show();
 
         description = view.findViewById(R.id.description);
         amenities = (NonScrollListView)view.findViewById(R.id.amenities);
@@ -102,8 +110,12 @@ public class DescriptionFragment extends Fragment {
                 @Override
                 public void onResponse(Call<HotelDetailsMain> call, Response<HotelDetailsMain> response) {
                     if(response.isSuccessful()){
-                        String desc = Html.fromHtml(response.body().getData().getDescription()).toString();
-                        description.setText(desc);
+                       if(response.body().getData()==null){
+
+                       }else {
+                           String desc = Html.fromHtml(response.body().getData().getDescription()).toString();
+                           description.setText(desc);
+                       }
                     }
 
                     getHotelFeaturesbyid();
@@ -111,7 +123,7 @@ public class DescriptionFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<HotelDetailsMain> call, Throwable t) {
-
+                    dialog.dismiss();
                 }
             });
     }
@@ -123,6 +135,7 @@ public class DescriptionFragment extends Fragment {
             @Override
             public void onResponse(Call<HotelFeaturesMain> call, Response<HotelFeaturesMain> response) {
                 if(response.isSuccessful()){
+                    dialog.dismiss();
                     features = new ArrayList<>();
                     for(int i=0;i<response.body().getData().size();i++) {
                         features.add(response.body().getData().get(i));
@@ -145,7 +158,7 @@ public class DescriptionFragment extends Fragment {
 
             @Override
             public void onFailure(Call<HotelFeaturesMain> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }

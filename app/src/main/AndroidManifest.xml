@@ -52,7 +52,14 @@
         <activity android:name=".HotelList.GalleryActivity" />
         <activity android:name=".Booking.BookingActivity" />
         <activity android:name=".Booking.BookingPaymentActivity" />
-        <activity android:name=".Booking.Verification.VerificationActivity"></activity>
+        <activity android:name=".Booking.Verification.VerificationActivity" />
+        <activity
+            android:name=".SignUPandLogin.LoginActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity
+            android:name=".SignUPandLogin.SignUpActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".Main.TermAndConditionsActivity"></activity>
     </application>
 
 </manifest>

@@ -5,9 +5,9 @@ package com.example.sanjay.traveljinee;
  */
 
 public class StringClass {
-    String base_url = "http://www.mocky.io/v2/";
+    public static String base_url = "http://www.mocky.io/v2/";
 
-    public static String hotel_base_url="http://192.168.0.111:81/";
+    public static String hotel_base_url="http://124.41.193.135:90/";
 
     String paypal_Client_Id = "AeRg1jn4vhaRp93Ga5TfrEEfGaZJXys9B7cH23crnUmb6j3c7fJSDgs_bNCbHguQqtoPc8pbOb4kP_Ir";
     String paypal_Secrent_Key = "EOb4QALw2VszofKybgexL1w7JKD5Vsr3dibjWWj-Ng7Otj9mqVtVnwLkwQlFgY4SHAH_J1wRWDitFKrJ";

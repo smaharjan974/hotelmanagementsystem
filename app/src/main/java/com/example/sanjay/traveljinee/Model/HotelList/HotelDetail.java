@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by SANJAY on 1/29/2018.
  */
 
-public class HotelDetails {
+public class HotelDetail {
     @SerializedName("HotelId")
     @Expose
     private Integer hotelId;

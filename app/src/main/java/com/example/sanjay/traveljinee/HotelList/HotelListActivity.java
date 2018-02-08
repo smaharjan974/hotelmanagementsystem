@@ -1,6 +1,9 @@
 package com.example.sanjay.traveljinee.HotelList;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.multidex.MultiDex;
 import android.support.v4.app.Fragment;
@@ -16,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sanjay.traveljinee.CustomModel.HotelDetailsWithModel;
+import com.example.sanjay.traveljinee.CustomModel.MainModel;
 import com.example.sanjay.traveljinee.HotelList.Fragment.Deal.DealFragment;
 import com.example.sanjay.traveljinee.HotelList.Fragment.Deal.Model;
 import com.example.sanjay.traveljinee.HotelList.Fragment.Details.DescriptionFragment;
@@ -26,11 +31,13 @@ import com.example.sanjay.traveljinee.Main.ImageAdapter;
 import com.example.sanjay.traveljinee.Main.MainActivity;
 import com.example.sanjay.traveljinee.Model.HotelDetails.HotelDetailsMain;
 import com.example.sanjay.traveljinee.Model.HotelDetailsModel;
+import com.example.sanjay.traveljinee.Model.HotelList.HotelDetail;
 import com.example.sanjay.traveljinee.R;
 import com.example.sanjay.traveljinee.Retrofit.APIInterface;
 import com.example.sanjay.traveljinee.Retrofit.APiClient;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,8 +58,12 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
     List<String> features,featuers1;
     List<String> services,services1 ;
 
-    HotelDetailsModel hotel;
+//    HotelDetailsModel hotel;
     int hotelid ;
+    HotelDetailsWithModel hotelDetailsWithModel;
+    MainModel mainModel;
+    HotelDetail hoteldetail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +72,32 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
 
         int fragmentId = getIntent().getIntExtra("FRAGMENT_ID", 0);
         hotelid = getIntent().getIntExtra("hotelid",0);
+
+        String model = getIntent().getStringExtra("hoteldetailswithmodel");
+        hotelDetailsWithModel = new Gson().fromJson(model, HotelDetailsWithModel.class);
+        mainModel = hotelDetailsWithModel.getModel();
+        hoteldetail = hotelDetailsWithModel.getDetails();
+        share = findViewById(R.id.share);
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApplicationInfo app = getApplicationContext().getApplicationInfo();
+                String filePath = app.sourceDir;
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                // MIME of .apk is "application/vnd.android.package-archive".
+                // but Bluetooth does not accept this. Let's use "*/*" instead.
+                intent.setType("*/*");
+
+
+                // Append file and send Intent
+                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(filePath)));
+                startActivity(Intent.createChooser(intent, "Share app via"));
+            }
+        });
+
 
         getInitialize();
         getHoteldetails();
@@ -76,33 +113,6 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
 
 
         back.setOnClickListener(this);
-
-        features = new ArrayList<>();
-        features.add("Room with a view");
-        features.add("Mountain View");
-        features.add("Landmark view");
-        features.add("City view");
-
-        featuers1 = new ArrayList<>();
-        featuers1.add("Room with a view");
-        featuers1.add("Mountain view");
-
-        services=new ArrayList<>();
-        services.add("Has a balcony");
-        services.add("Very good breakfast included in the price.");
-        services.add("FREE cancellation before 21 dec");
-        services.add("NO PAYMENT NEEDED - pay at the property");
-
-        services1 = new ArrayList<>();
-        services1.add("Has a balcony");
-        services1.add("Very good breakfast included in the price.");
-        services1.add("FREE cancellation before 21 dec");
-
-
-         hotel = new HotelDetailsModel("Mum's Garden Resort","Pokhara, Nepal","Double room",
-                "2","1",features,services,"Good special offer","25",
-                "Ideally located in the prime touristic area of Patan City, Traditional Homew Swotha Promises a relaxing and wonderful visit. Offering a variety of facilities and services, the hotel provides all you need for a good night's. Wifi in all rooms are there for a guest enjoyment. Guestrooms are designed to provide an optimal level of comfort with welcoming decor and some offering convenient amenities like complimentary bottled water, balcony/terrace, internet access. The hotel offers various recreational opportunities. A welcoming atmosphere and excellent service are what you can expect during your stay at traditional Homes Swotha."
-        );
 
 
         htab_tabs.addTab(htab_tabs.newTab().setText("DEAL"));
@@ -133,7 +143,7 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
 
         htab_viewpager.setCurrentItem(fragmentId);
         htab_tabs.setupWithViewPager(htab_viewpager);
-        htab_tabs.getTabAt(0).setText("DEAL");
+        htab_tabs.getTabAt(0).setText("DEALS");
         htab_tabs.getTabAt(1).setText("DETAILS");
         htab_tabs.getTabAt(2).setText("MAP");
         htab_tabs.getTabAt(3).setText("REVIEWS");
@@ -147,10 +157,14 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onResponse(Call<HotelDetailsMain> call, Response<HotelDetailsMain> response) {
                 if(response.isSuccessful()){
-                    Toast.makeText(HotelListActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                    Log.d("fasd", "onResponse: ");
-                    hotelname.setText(response.body().getData().getHotelName().toString());
-                    hoteladdress.setText(response.body().getData().getHotelAddress().toString());
+                    if(response.body().getData()==null){
+
+                    }else {
+                        Toast.makeText(HotelListActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                        Log.d("fasd", "onResponse: ");
+                        hotelname.setText(response.body().getData().getHotelName().toString());
+                        hoteladdress.setText(response.body().getData().getHotelAddress().toString());
+                    }
                 }else {
                     Log.d("fasd", "onResponse: failed ");
 
@@ -211,14 +225,14 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
                 case 0:
                     Bundle bundle = new Bundle();
                     bundle.putInt("hotelid",hotelid);
-                    bundle.putString("params", new Gson().toJson(hotel));
+                    bundle.putString("params", new Gson().toJson(hotelDetailsWithModel));
 // set MyFragment Arguments
                     DealFragment dealFragment = new DealFragment();
                     dealFragment.setArguments(bundle);
                     return dealFragment;
                 case 1:
                     Bundle bundle1 = new Bundle();
-                    bundle1.putString("params", new Gson().toJson(hotel));
+                    bundle1.putString("params", new Gson().toJson(hotelDetailsWithModel));
                     bundle1.putInt("hotelid",hotelid);
 // set MyFragment Arguments
                     DescriptionFragment detailsfragment = new DescriptionFragment();
@@ -227,7 +241,7 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
                 case 2:
                     Bundle bundle2 = new Bundle();
                     bundle2.putInt("hotelid",hotelid);
-                    bundle2.putString("params", new Gson().toJson(hotel));
+                    bundle2.putString("params", new Gson().toJson(hotelDetailsWithModel));
 // set MyFragment Arguments
                     MapFragment mapFragment = new MapFragment();
                     mapFragment.setArguments(bundle2);
@@ -235,7 +249,7 @@ public class HotelListActivity extends AppCompatActivity implements View.OnClick
                 case 3:
                     Bundle bundle3 = new Bundle();
                     bundle3.putInt("hotelid",hotelid);
-                    bundle3.putString("params", new Gson().toJson(hotel));
+                    bundle3.putString("params", new Gson().toJson(hotelDetailsWithModel));
 // set MyFragment Arguments
                     ReviewFragment reviewsFragment = new ReviewFragment();
                     reviewsFragment.setArguments(bundle3);

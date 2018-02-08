@@ -2,7 +2,6 @@ package com.example.sanjay.traveljinee.SearchHotel;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +10,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.sanjay.traveljinee.CustomModel.HotelDetailsWithModel;
 import com.example.sanjay.traveljinee.HotelList.GalleryActivity;
 import com.example.sanjay.traveljinee.HotelList.HotelListActivity;
-import com.example.sanjay.traveljinee.Model.HotelList.HotelDetails;
+import com.example.sanjay.traveljinee.Model.HotelList.HotelDetail;
 import com.example.sanjay.traveljinee.R;
-import com.example.sanjay.traveljinee.StringClass;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -26,9 +26,9 @@ import java.util.List;
 public class MyHotelSearchListAdapter extends BaseAdapter {
 
     Context context;
-    List<HotelDetails> list;
+    List<HotelDetailsWithModel> list;
 
-    public MyHotelSearchListAdapter(Context context, List<HotelDetails> list) {
+    public MyHotelSearchListAdapter(Context context, List<HotelDetailsWithModel> list) {
         this.context = context;
         this.list = list;
     }
@@ -65,16 +65,17 @@ public class MyHotelSearchListAdapter extends BaseAdapter {
         LinearLayout map = (LinearLayout)convertView.findViewById(R.id.map);
         LinearLayout rating = (LinearLayout)convertView.findViewById(R.id.rating);
 
-        hotelname.setText(String.valueOf(list.get(position).getHotelname()));
-        hoteladdress.setText(list.get(position).getHotelAddress());
-        hotelrate.setText(String.valueOf(list.get(position).getRating()));
-        reviews.setText(String.valueOf(list.get(position).getUserView())+" reviews");
+        hotelname.setText(String.valueOf(list.get(position).getDetails().getHotelname()));
+        hoteladdress.setText(list.get(position).getDetails().getHotelAddress());
+        hotelrate.setText(String.valueOf(list.get(position).getDetails().getRating()));
+        reviews.setText(String.valueOf(list.get(position).getDetails().getUserView())+" reviews");
 
         rating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context,HotelListActivity.class);
-                i.putExtra("hotelid",list.get(position).getHotelId());
+                i.putExtra("hoteldetailswithmodel",new Gson().toJson(list.get(position)));
+                i.putExtra("hotelid",list.get(position).getDetails().getHotelId());
                 i.putExtra("FRAGMENT_ID",3);
                 context.startActivity(i);
             }
@@ -84,7 +85,8 @@ public class MyHotelSearchListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context,HotelListActivity.class);
-                i.putExtra("hotelid",list.get(position).getHotelId());
+                i.putExtra("hoteldetailswithmodel",new Gson().toJson(list.get(position)));
+                i.putExtra("hotelid",list.get(position).getDetails().getHotelId());
                 i.putExtra("FRAGMENT_ID",1);
                 context.startActivity(i);
             }
@@ -94,7 +96,8 @@ public class MyHotelSearchListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context,HotelListActivity.class);
-                i.putExtra("hotelid",list.get(position).getHotelId());
+                i.putExtra("hoteldetailswithmodel",new Gson().toJson(list.get(position)));
+                i.putExtra("hotelid",list.get(position).getDetails().getHotelId());
                 i.putExtra("FRAGMENT_ID",2);
                 context.startActivity(i);
             }
@@ -104,7 +107,8 @@ public class MyHotelSearchListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context, GalleryActivity.class);
-                i.putExtra("hotelid",list.get(position).getHotelId());
+                i.putExtra("hoteldetailswithmodel",new Gson().toJson(list.get(position)));
+                i.putExtra("hotelid",list.get(position).getDetails().getHotelId());
                 context.startActivity(i);
             }
         });
@@ -113,7 +117,8 @@ public class MyHotelSearchListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context,HotelListActivity.class);
-                i.putExtra("hotelid",list.get(position).getHotelId());
+                i.putExtra("hoteldetailswithmodel",new Gson().toJson(list.get(position)));
+                i.putExtra("hotelid",list.get(position).getDetails().getHotelId());
                 context.startActivity(i);
             }
         });

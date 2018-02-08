@@ -4,14 +4,21 @@ package com.example.sanjay.traveljinee.Retrofit;
 
 import com.example.sanjay.traveljinee.Booking.Paypal.PayPalPaymentDetails.DetailsMain;
 import com.example.sanjay.traveljinee.Booking.Paypal.TokenModel;
+import com.example.sanjay.traveljinee.CustomModel.BookingCustomModel;
 import com.example.sanjay.traveljinee.CustomModel.MainModel;
 import com.example.sanjay.traveljinee.Model.Address.AddressMain;
+import com.example.sanjay.traveljinee.Model.Booking.BookingMain;
+import com.example.sanjay.traveljinee.Model.Booking.BookingModel;
+import com.example.sanjay.traveljinee.Model.BookingPayment.BookingPaymentMain;
+import com.example.sanjay.traveljinee.Model.CommonFeatures.CommonFeaturesMain;
 import com.example.sanjay.traveljinee.Model.CountryListModel;
 import com.example.sanjay.traveljinee.Model.HotelDetails.HotelDetailsMain;
 import com.example.sanjay.traveljinee.Model.HotelFeatures.HotelFeaturesMain;
 import com.example.sanjay.traveljinee.Model.HotelList.HotelListMain;
 import com.example.sanjay.traveljinee.Model.HotelRating.RatingMain;
 import com.example.sanjay.traveljinee.Model.HotelRating.UserRating.UserRatingMain;
+import com.example.sanjay.traveljinee.Model.LoginSignUP.Login.LoginMain;
+import com.example.sanjay.traveljinee.Model.LoginSignUP.Login.SignUpMain;
 import com.example.sanjay.traveljinee.Model.Offers.OffersMain;
 import com.example.sanjay.traveljinee.Model.RoomDeal.RoomDealMain;
 import com.example.sanjay.traveljinee.SearchHotel.FailedToken;
@@ -19,6 +26,7 @@ import com.example.sanjay.traveljinee.SearchHotel.HotelModel;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -81,4 +89,21 @@ public interface APIInterface {
 
     @POST("api/v1/offers/getOffers")
     Call<OffersMain> getoffers();
+
+    @Headers("Content-Type: application/json")
+    @POST("api/v1/hotelBooking/saveHotelBooking")
+    Call<BookingMain> getbooking(@Body BookingCustomModel bookingModel);
+
+    @POST("api/v1/bookingPayment/saveBookingPayment")
+    Call<BookingPaymentMain> getsavebookingpayment(@Query("BookingId") int bookingId, @Query("Amount") String amount, @Query("PaymentGatewayId") int paymentgatewayid,
+                                                   @Query("PayId") String payid, @Query("TransactionId") String TransactionId, @Query("Remarks") String remarks);
+
+    @POST("api/v1/Account/Login")
+    Call<Object> getlogin(@Query("Email") String email, @Query("Password") String password);
+
+    @POST("api/v1/Account/Register")
+    Call<Object> getRegister(@Query("Email") String email, @Query("Password") String password, @Query("ConfirmPassword") String confirmpassword);
+
+    @POST("api/v1/features/getFeatures")
+    Call<CommonFeaturesMain> getCommonFeatures();
 }

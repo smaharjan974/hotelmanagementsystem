@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Erica"
                 android:gravity="center"
-                android:textSize="@dimen/largenormaltextsize"
+                android:textSize="@dimen/normaltextsize"
                 android:textColor="@color/black"
                 android:layout_marginTop="@dimen/smallpadding"
                 />

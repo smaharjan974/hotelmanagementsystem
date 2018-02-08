@@ -46,6 +46,76 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/smallpadding"
+                >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Booking Was Successfully."
+                    android:gravity="center"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginTop="@dimen/largepadding"
+                    android:layout_marginBottom="@dimen/smallpadding"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thanks For Booking."
+                    android:gravity="center"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:layout_marginBottom="@dimen/smallpadding"
+
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Your Booking Id is:  "
+                    android:gravity="center"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:layout_marginBottom="@dimen/smallpadding"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/bookingid"
+                    android:text="Boookindid"
+                    android:gravity="center"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:layout_marginBottom="@dimen/smallpadding"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="For Payment Use Esewa or Paypal"
+                    android:gravity="center"
+                    android:textSize="@dimen/largenormaltextsize"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="@dimen/normalpadding"
+                    android:layout_marginBottom="@dimen/smallpadding"
+                    />
+
+
+
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
     </ScrollView>

@@ -6,10 +6,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
 import android.system.Os;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
@@ -26,6 +28,8 @@ import com.example.sanjay.traveljinee.R;
 import com.example.sanjay.traveljinee.Retrofit.APIInterface;
 import com.example.sanjay.traveljinee.Retrofit.APiClient;
 import com.example.sanjay.traveljinee.SearchHotel.SearchHotelActivity;
+import com.example.sanjay.traveljinee.SignUPandLogin.LoginActivity;
+import com.example.sanjay.traveljinee.SignUPandLogin.SignUpActivity;
 import com.google.gson.Gson;
 
 import java.text.ParseException;
@@ -51,8 +55,6 @@ public class MainActivity extends Activity {
 
     LinearLayout checkin, checkout;
     TextView datein, dateout;
-
-
     Calendar calendar = Calendar.getInstance();
     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
     Date indates, outdate, Todaydate;
@@ -62,6 +64,11 @@ public class MainActivity extends Activity {
 
     ProgressDialog progressDialog;
     List<String> addresslist;
+
+    TextView signup, login;
+    SharedPreferences preferences;
+    LinearLayout loginusername;
+    TextView termsandconditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +81,34 @@ public class MainActivity extends Activity {
 
         }
 
+        loginusername = findViewById(R.id.loginusername);
+        termsandconditions = findViewById(R.id.termsandconditions);
+
+        termsandconditions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,TermAndConditionsActivity.class));
+            }
+        });
+
+        preferences = getSharedPreferences("login",MODE_PRIVATE);
+        String name = preferences.getString("username","");
+
+        Log.d("ggggdd", "onCreate: "+name);
+        if(name.equals("")){
+
+        }else {
+            loginusername.setVisibility(View.GONE);
+        }
+
         progressDialog = new ProgressDialog(MainActivity.this);
         progressDialog.setCancelable(false);
         progressDialog.setTitle("Loading");
         progressDialog.setMessage("Checking For internet Connection");
         progressDialog.show();
+
+        signup = findViewById(R.id.signup);
+        login = findViewById(R.id.login);
 
         noofroom = findViewById(R.id.noofroom);
         noofadult = findViewById(R.id.noofadult);
@@ -108,8 +138,6 @@ public class MainActivity extends Activity {
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         stringList.add(response.body().getData().get(i).getTitle() + " " + response.body().getData().get(i).getTheme());
                     }
-
-
                     viewPager.setAdapter(new MyPagerAdapter(getBaseContext(), stringList));
                     viewPager.startAutoScroll();
                     viewPager.setCycle(true);
@@ -126,14 +154,27 @@ public class MainActivity extends Activity {
             }
         });
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class).putExtra("check","main"));
+            }
+        });
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SignUpActivity.class));
+            }
+        });
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setCancelable(false);
-                progressDialog.setTitle("Loading");
-                progressDialog.setMessage("Checking For internet Connection");
+                progressDialog.setMessage("Processing");
                 progressDialog.show();
 
 
@@ -152,27 +193,19 @@ public class MainActivity extends Activity {
                     if (addresslist == null || addresslist.size() == 0) {
                         Toast.makeText(MainActivity.this, "No Data Found or Internet Connection", Toast.LENGTH_SHORT).show();
                     } else {
-                        for (int i = 0; i < addresslist.size(); i++) {
-                            if (hotellocation.contains(addresslist.get(i))) {
-                                MainModel model = new MainModel(hotellocation, checkin, checkout, roomno, adultno, childno, null, null,
-                                        null, null, null, null);
-                                String modelname = new Gson().toJson(model);
-                                Intent j = new Intent(MainActivity.this, SearchHotelActivity.class);
-                                j.putExtra("modelname", modelname);
-                                startActivity(j);
-                            } else {
-                                if (i == addresslist.size()) {
-                                    location.setError("Set Valid location");
-                                } else {
-                                    //do nothing
-                                }
-                            }
+                        if(hotellocation.equals("")||hotellocation.equals(null)){
+                            location.setError("Insert Location");
+                        }else {
+                            MainModel model = new MainModel(hotellocation, checkin, checkout, roomno, adultno, childno, null, null,
+                                    null, null, null, null);
+                            String modelname = new Gson().toJson(model);
+                            Intent j = new Intent(MainActivity.this, SearchHotelActivity.class);
+                            j.putExtra("modelname", modelname);
+                            startActivity(j);
                         }
 
                     }
                 }
-
-
             }
         });
 
@@ -449,10 +482,11 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         finishAffinity();
     }
 
-//    @Override
+//        @Override
 //    protected void attachBaseContext(Context base)
 //    {
 //        super.attachBaseContext(base);

@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.example.sanjay.traveljinee.Model.CommonFeatures.CommonFeaturesModel;
 import com.example.sanjay.traveljinee.R;
 
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ import java.util.List;
 public class MyHotelCommonFeature2ListAdapter extends BaseAdapter {
 
     Context context;
-    List<String> stringlist;
+    List<CommonFeaturesModel> stringlist;
     CheckBox service;
-    List<String> selectionList = new ArrayList<>();
+    List<Integer> selectionList = new ArrayList<>();
 
-    public MyHotelCommonFeature2ListAdapter(Context context, List<String> stringlist) {
+    public MyHotelCommonFeature2ListAdapter(Context context, List<CommonFeaturesModel> stringlist) {
         this.context = context;
         this.stringlist = stringlist;
     }
@@ -53,16 +54,16 @@ public class MyHotelCommonFeature2ListAdapter extends BaseAdapter {
 
 
         service = (CheckBox) convertView.findViewById(R.id.checkbox);
-        service.setText(stringlist.get(position));
+        service.setText(stringlist.get(position).getFacilityName());
 
         service.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    selectionList.add(stringlist.get(position));
+                    selectionList.add(stringlist.get(position).getFacilityId());
                 } else {
                     for (int i = 0; i < selectionList.size(); i++) {
-                        if (stringlist.get(position).equals(selectionList.get(i))) {
+                        if (stringlist.get(position).getFacilityId().equals(selectionList.get(i))) {
                             selectionList.remove(selectionList.get(i));
                         } else {
                             //do nothing

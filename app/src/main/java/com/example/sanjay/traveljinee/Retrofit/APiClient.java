@@ -13,7 +13,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class APiClient {
 
-    private static final String ROOT_URL= StringClass.hotel_base_url;
+    private static final String ROOT_URL = StringClass.hotel_base_url;
+
     private static Retrofit getRetrofitInstance() {
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -24,8 +25,8 @@ public class APiClient {
                 .build();
 
     }
-    public static APIInterface getApiService()
-    {
+
+    public static APIInterface getApiService() {
         return getRetrofitInstance().create(APIInterface.class);
     }
     }

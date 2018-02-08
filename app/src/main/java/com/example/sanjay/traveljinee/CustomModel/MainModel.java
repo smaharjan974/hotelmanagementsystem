@@ -15,13 +15,13 @@ public class MainModel {
     String childno;
     String roomtype;
     List<Integer> ratinglist;
-    List<String> featureslist;
+    List<Integer> featureslist;
     String maxdistance;
     String maxprice;
     String hotelname;
 
 
-    public MainModel(String address, String checkindate, String checkoutdate, String roomno, String adultno, String childno, String roomtype, List<Integer> ratinglist, List<String> featureslist, String maxdistance, String maxprice, String hotelname) {
+    public MainModel(String address, String checkindate, String checkoutdate, String roomno, String adultno, String childno, String roomtype, List<Integer> ratinglist, List<Integer> featureslist, String maxdistance, String maxprice, String hotelname) {
         this.address = address;
         this.checkindate = checkindate;
         this.checkoutdate = checkoutdate;
@@ -52,11 +52,11 @@ public class MainModel {
         this.ratinglist = ratinglist;
     }
 
-    public List<String> getFeatureslist() {
+    public List<Integer> getFeatureslist() {
         return featureslist;
     }
 
-    public void setFeatureslist(List<String> featureslist) {
+    public void setFeatureslist(List<Integer> featureslist) {
         this.featureslist = featureslist;
     }
 

@@ -5,10 +5,10 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.multidex.MultiDex;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -30,10 +30,13 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sanjay.traveljinee.Main.MainActivity;
+import com.example.sanjay.traveljinee.CustomModel.HotelDetailsWithModel;
 import com.example.sanjay.traveljinee.CustomModel.MainModel;
+import com.example.sanjay.traveljinee.Main.MainActivity;
 import com.example.sanjay.traveljinee.Model.Address.AddressMain;
-import com.example.sanjay.traveljinee.Model.HotelList.HotelDetails;
+import com.example.sanjay.traveljinee.Model.CommonFeatures.CommonFeaturesMain;
+import com.example.sanjay.traveljinee.Model.CommonFeatures.CommonFeaturesModel;
+import com.example.sanjay.traveljinee.Model.HotelList.HotelDetail;
 import com.example.sanjay.traveljinee.Model.HotelList.HotelListMain;
 import com.example.sanjay.traveljinee.NonScrollListView;
 import com.example.sanjay.traveljinee.R;
@@ -61,11 +64,11 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
     DrawerLayout drawer;
     NonScrollListView listview;
     List<HotelModel> list;
-    List<String> features, features1;
+//    List<String> features, features1;
     String name, onestar, twostar, threestar, fourstar, fivestar;
     List<Integer> ratinglist;
     boolean ch, ch2, ch3, ch4, ch5 = false;
-    List<String> selectedfreaturelist, selectedfreaturelist2;
+    List<Integer> selectedfreaturelist, selectedfreaturelist2;
     LinearLayout checkin, checkout, roomtype;
     TextView datein, dateout, roomtypetext;
     Calendar calendar = Calendar.getInstance();
@@ -74,16 +77,20 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
     String checkindate, checkoutdate;
     MainModel model;
     ProgressDialog dialog;
-    List<HotelDetails> hotellist;
+    List<HotelDetail> hotellist;
 
     List<String> addresslist;
     ListView location;
-
+    SharedPreferences preferences;
+    NonScrollListView fealist,fealist1;
+    List<CommonFeaturesModel> features,features1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_hotel);
+
+        preferences = getSharedPreferences("login",MODE_PRIVATE);
 
         dialog = new ProgressDialog(SearchHotelActivity.this);
         dialog.setCancelable(false);
@@ -96,8 +103,6 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
         }.getType();
         model = new Gson().fromJson(modelname, type);
 
-//        Log.d("modell", "onCreate: "+new Gson().toJson(model));
-
         if (getIntent().getStringExtra("datein") == null) {
 
         } else {
@@ -107,23 +112,17 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
         getinit();
         getNavItem();
 
-//        if (getIntent().getStringExtra("list") == null) {
         if (model != null) {
+            Log.d("abbbcccddd", "onQueryTextSubmit: "+new Gson().toJson(model));
             getSupportActionBar().setTitle(model.getAddress());
         } else {
             getSupportActionBar().setTitle("");
         }
 
-        list = new ArrayList<>();
-        list.add(new HotelModel("MUM'S GARDEN RESORT", "POKHARA", "8.5"));
-        list.add(new HotelModel("BUSYBEE GARDEN RESORT", "POKHARA", "8.5"));
-        list.add(new HotelModel("ASDF GARDEN RESORT", "POKHARA", "8.5"));
-        list.add(new HotelModel("ASD'S GARDEN RESORT", "POKHARA", "8.5"));
-
         gethotellist(model);
     }
 
-    private void gethotellist(MainModel modell) {
+    private void gethotellist(final MainModel modell) {
         APIInterface api = APiClient.getApiService();
         Call<HotelListMain> call = api.getHotelListByParameter(modell);
         call.enqueue(new Callback<HotelListMain>() {
@@ -131,13 +130,16 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
             public void onResponse(Call<HotelListMain> call, Response<HotelListMain> response) {
                 if (response.isSuccessful()) {
                     hotellist = new ArrayList<>();
+                    List<HotelDetailsWithModel> hotel= new ArrayList<>();
                     for (int i = 0; i < response.body().getData().size(); i++) {
                         hotellist.add(response.body().getData().get(i));
+                        hotel.add(new HotelDetailsWithModel(modell,response.body().getData().get(i)));
                     }
                     dialog.dismiss();
-                    listview.setAdapter(new MyHotelSearchListAdapter(SearchHotelActivity.this, hotellist));
-
-
+                    listview.setAdapter(new MyHotelSearchListAdapter(SearchHotelActivity.this, hotel));
+                }else {
+                    dialog.dismiss();
+                    Toast.makeText(SearchHotelActivity.this, "Bad Request.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -148,29 +150,22 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
         });
     }
 
-    public List<String> selectedFeatures(List<String> string) {
+    public List<Integer> selectedFeatures(List<Integer> string) {
         Log.d("asdf", "selectedFeatures: " + string.size());
         selectedfreaturelist = new ArrayList<>();
         for (int i = 0; i < string.size(); i++) {
             selectedfreaturelist.add(string.get(i));
         }
 
-        for (int i = 0; i < selectedfreaturelist.size(); i++) {
-            Log.d("abcd", "selectedFeatures: " + selectedfreaturelist.get(i));
-        }
 
         return selectedfreaturelist;
     }
 
-    public List<String> selectedFeatures2(List<String> string) {
+    public List<Integer> selectedFeatures2(List<Integer> string) {
         Log.d("asdf", "selectedFeatures: " + string.size());
         selectedfreaturelist2 = new ArrayList<>();
         for (int i = 0; i < string.size(); i++) {
             selectedfreaturelist2.add(string.get(i));
-        }
-
-        for (int i = 0; i < selectedfreaturelist2.size(); i++) {
-            Log.d("abcd", "selectedFeatures: abc " + selectedfreaturelist2.get(i));
         }
 
         return selectedfreaturelist2;
@@ -246,6 +241,15 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
                             dateout.setText(myFormat.format(calendar.getTime()));
                         }
                     }
+                    dialog = new ProgressDialog(SearchHotelActivity.this);
+                    dialog.setCancelable(false);
+                    dialog.setTitle("Loading");
+                    dialog.setMessage("Loading Hotel List. Please Wait...");
+                    dialog.show();
+                    model.setCheckindate(datein.getText().toString());
+                    model.setCheckoutdate(dateout.getText().toString());
+                    Log.d("abbbcccddd", "onQueryTextSubmit: "+new Gson().toJson(model));
+                    gethotellist(model);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -257,10 +261,6 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
             public void onClick(View v) {
                 new DatePickerDialog(SearchHotelActivity.this, indate, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
-
-                //2018-1-31
-                model.setCheckindate(datein.getText().toString());
-                gethotellist(model);
 
             }
         });
@@ -279,6 +279,14 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
                     } else {
                         Toast.makeText(SearchHotelActivity.this, "Set The date greater than " + myFormat.format(indates), Toast.LENGTH_SHORT).show();
                     }
+                    dialog = new ProgressDialog(SearchHotelActivity.this);
+                    dialog.setCancelable(false);
+                    dialog.setTitle("Loading");
+                    dialog.setMessage("Loading Hotel List. Please Wait...");
+                    dialog.show();
+                    model.setCheckoutdate(dateout.getText().toString());
+                    Log.d("abbbcccddd", "onQueryTextSubmit: "+new Gson().toJson(model));
+                    gethotellist(model);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -290,10 +298,6 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
             public void onClick(View v) {
                 new DatePickerDialog(SearchHotelActivity.this, outdates, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                         calendar.get(Calendar.DAY_OF_MONTH)).show();
-
-                //2018-1-31
-                model.setCheckoutdate(dateout.getText().toString());
-                gethotellist(model);
 
 
             }
@@ -309,14 +313,14 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         roomtypetext.setText(item.getTitle());
+                        model.setRoomtype(roomtypetext.getText().toString());
+                        Log.d("abbbcccddd", "onQueryTextSubmit: "+new Gson().toJson(model));
+                        gethotellist(model);
                         return true;
                     }
                 });
                 popup.show();
 
-                //2018-1-31
-                model.setRoomtype(roomtypetext.getText().toString());
-                gethotellist(model);
             }
         });
 
@@ -466,20 +470,15 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
             }
         });
 
-        features = new ArrayList<>();
-        features.add("FreeWifi1");
-        features.add("FreeWifi2");
-        features.add("FreeWifi3");
+        fealist = (NonScrollListView) header.findViewById(R.id.features1);
+        fealist1 = (NonScrollListView) header.findViewById(R.id.features2);
+        getFeatures();
 
-        features1 = new ArrayList<>();
-        features1.add("Shower");
-        features1.add("shared room");
-        features1.add("extra bed");
-        final NonScrollListView fealist = (NonScrollListView) header.findViewById(R.id.features1);
-        NonScrollListView fealist1 = (NonScrollListView) header.findViewById(R.id.features2);
 
-        fealist.setAdapter((new MyHotelCommonFeatureListAdapter(this, features)));
-        fealist1.setAdapter(new MyHotelCommonFeature2ListAdapter(this, features1));
+
+
+
+
 
         final EditText address = header.findViewById(R.id.address);
 
@@ -487,33 +486,42 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> featurelist = new ArrayList<>();
-                for (int i = 0; i < features.size(); i++) {
-                    featurelist.add(features.get(i));
-                }
-                for (int i = 0; i < features1.size(); i++) {
-                    featurelist.add(features1.get(i));
-                }
+                List<Integer> featurelist = new ArrayList<>();
+                if(selectedfreaturelist==null){
 
-//                list = new ArrayList<>();
-//                list.add(new HotelModel("ABC", "POKHARA", "8.5"));
-//                list.add(new HotelModel("ASD", "POKHARA", "8.5"));
-//                list.add(new HotelModel("ASDF", "POKHARA", "8.5"));
-//                list.add(new HotelModel("ASD'SSS", "POKHARA", "8.5"));
+                }else {
+                    for (int i = 0; i < selectedfreaturelist.size(); i++) {
+                        featurelist.add(selectedfreaturelist.get(i));
+                    }
+                }
+                if(selectedfreaturelist2==null){
+
+                }else {
+                    for (int i = 0; i < selectedfreaturelist2.size(); i++) {
+                        featurelist.add(selectedfreaturelist2.get(i));
+                    }
+                }
 
                 String addresss = address.getText().toString();
                 getSupportActionBar().setTitle(addresss);
 
-                //2018-1-31
-                model.setAddress(addresss);
+                if(addresss.equals("")||addresss.equals(null)){
+                    getSupportActionBar().setTitle(model.getAddress());
+                    model.setAddress(model.getAddress());
+                }else {
+                    model.setAddress(addresss);
+                }
                 model.setFeatureslist(featurelist);
                 model.setRatinglist(ratinglist);
                 model.setMaxdistance(distance.getText().toString());
                 model.setMaxprice(price.getText().toString());
-                model.setHotelname(hotelname.getText().toString());
+                if (hotelname.getText().toString().equals("")||hotelname.getText().equals(null)){
+                    model.setHotelname(null);
+                }else {
+                    model.setHotelname(hotelname.getText().toString());
+                }
+                Log.d("abbbcccddd", "onQueryTextSubmit: "+new Gson().toJson(model));
                 gethotellist(model);
-
-//                listview.setAdapter(new MyHotelSearchListAdapter(SearchHotelActivity.this, list));
 
                 drawer.closeDrawers();
 
@@ -523,11 +531,52 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
 
     }
 
+    private void getFeatures() {
+        APIInterface api = APiClient.getApiService();
+        Call<CommonFeaturesMain> call = api.getCommonFeatures();
+        call.enqueue(new Callback<CommonFeaturesMain>() {
+            @Override
+            public void onResponse(Call<CommonFeaturesMain> call, Response<CommonFeaturesMain> response) {
+
+                if(response.isSuccessful()){
+                    features = new ArrayList<>();
+                    features1 = new ArrayList<>();
+                    for (int i=0;i<response.body().getData().size();i++){
+                        if(i%2==0){
+                            features.add(response.body().getData().get(i));
+                        }else {
+                            features1.add(response.body().getData().get(i));
+                        }
+                    }
+
+                    fealist.setAdapter((new MyHotelCommonFeatureListAdapter(SearchHotelActivity.this, features)));
+                    fealist1.setAdapter(new MyHotelCommonFeature2ListAdapter(SearchHotelActivity.this, features1));
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommonFeaturesMain> call, Throwable t) {
+
+            }
+        });
+
+    }
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+
+        MenuItem item;
+        String login = preferences.getString("username","");
+        if(login.equals("")){
+           item = menu.findItem(R.id.signout);
+           item.setVisible(false);
+        }
 
         APIInterface api = APiClient.getApiService();
         Call<AddressMain> call = api.getadress();
@@ -550,19 +599,11 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
 
                     searchView.setSearchableInfo(searchManager.
                             getSearchableInfo(getComponentName()));
-
                     searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                         @Override
                         public boolean onQueryTextSubmit(String s) {
                             getSupportActionBar().setTitle(s);
 
-                            list = new ArrayList<>();
-                            list.add(new HotelModel("MUM'S ", "POKHARA", "8.5"));
-                            list.add(new HotelModel("BUSYBEE", "POKHARA", "8.5"));
-                            list.add(new HotelModel("ASDF", "POKHARA", "8.5"));
-                            list.add(new HotelModel("ASD'S", "POKHARA", "8.5"));
-
-                            //2018-1-31
                             model.setAddress(s);
                             gethotellist(model);
                             searchView.onActionViewCollapsed();
@@ -571,7 +612,6 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
 
                         @Override
                         public boolean onQueryTextChange(String s) {
-                            adapter.getFilter().filter(s);
                             return false;
                         }
                     });
@@ -593,6 +633,12 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
             case android.R.id.home:
                 onBackPressed();
                 break;
+            case R.id.signout:
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.clear();
+                editor.commit();
+                startActivity(new Intent(SearchHotelActivity.this, MainActivity.class));
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -609,12 +655,6 @@ public class SearchHotelActivity extends AppCompatActivity implements Navigation
         super.onBackPressed();
     }
 
-//    @Override
-//    protected void attachBaseContext(Context base)
-//    {
-//        super.attachBaseContext(base);
-//        MultiDex.install(SearchHotelActivity.this);
-//    }
 
 
 }

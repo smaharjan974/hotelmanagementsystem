@@ -3,21 +3,28 @@ package com.example.sanjay.traveljinee.Booking;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sanjay.traveljinee.Booking.Paypal.PayPalPayment.MainPayPalPayment;
 import com.example.sanjay.traveljinee.Booking.Paypal.PayPalPaymentDetails.DetailsMain;
 import com.example.sanjay.traveljinee.Booking.Paypal.TokenModel;
 import com.example.sanjay.traveljinee.Booking.Verification.VerificationActivity;
+import com.example.sanjay.traveljinee.CustomModel.BookingPaymentWithHotelDetails;
+import com.example.sanjay.traveljinee.CustomModel.BookingWithHotelDetails;
+import com.example.sanjay.traveljinee.Model.BookingPayment.BookingPaymentMain;
+import com.example.sanjay.traveljinee.Model.BookingPayment.BookingPaymentModel;
 import com.example.sanjay.traveljinee.R;
 import com.example.sanjay.traveljinee.Retrofit.APIInterface;
 import com.example.sanjay.traveljinee.Retrofit.APIPayPal;
+import com.example.sanjay.traveljinee.Retrofit.APiClient;
 import com.example.sanjay.traveljinee.StringClass;
 import com.google.gson.Gson;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -29,6 +36,10 @@ import com.paypal.android.sdk.payments.PaymentConfirmation;
 import org.json.JSONException;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -52,13 +63,45 @@ public class BookingPaymentActivity extends AppCompatActivity {
     String m_paypalClientId = new StringClass().getPaypal_Client_Id();
     Intent m_service;
     int m_paypalRequestCode = 999; // or any number you want
+    BookingWithHotelDetails bookingWithHotelDetails;
+    Date indate, outdate;
+    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Double totalprice;
+    long diffDays;
+    int bookingid, gatewayid;
+    String transactidid;
+    TextView booking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_payment);
 
+        String intent = getIntent().getStringExtra("bookingwithdetails");
+        bookingWithHotelDetails = new Gson().fromJson(intent, BookingWithHotelDetails.class);
 
+        bookingid = bookingWithHotelDetails.getBookingPaymentModel().getBookingId();
+
+        booking = findViewById(R.id.bookingid);
+        booking.setText(String.valueOf(bookingid));
+
+
+        String checkindate = bookingWithHotelDetails.getHotelDetailsWithModelRoomDeal().getHotelDetailsWithModel().getModel().getCheckindate();
+        String checkoutdate = bookingWithHotelDetails.getHotelDetailsWithModelRoomDeal().getHotelDetailsWithModel().getModel().getCheckoutdate();
+        try {
+            indate = myFormat.parse(checkindate);
+            outdate = myFormat.parse(checkoutdate);
+
+            long diff = outdate.getTime() - indate.getTime();
+
+            diffDays = diff / (24 * 60 * 60 * 1000);
+            double price = diffDays * Integer.parseInt(bookingWithHotelDetails.getHotelDetailsWithModelRoomDeal().getRoomDealModel().getPrice().toString());
+
+            totalprice = price;
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         paypal = findViewById(R.id.imgpaypal);
 
         m_configuration = new PayPalConfiguration()
@@ -69,6 +112,7 @@ public class BookingPaymentActivity extends AppCompatActivity {
         m_service.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, m_configuration); // configuration above
         startService(m_service); // paypal service, listening to calls to paypal app
 
+
         paypal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,14 +122,10 @@ public class BookingPaymentActivity extends AppCompatActivity {
     }
 
     private void paypalpayment() {
-        Toast.makeText(BookingPaymentActivity.this, "Paypal Clicked!", Toast.LENGTH_SHORT).show();
 
-        BigDecimal decimal = new BigDecimal(Double.parseDouble(String.valueOf(1)));
+        BigDecimal decimal = new BigDecimal(Double.parseDouble(String.valueOf(totalprice)));
 
-        PayPalPayment payment = new PayPalPayment(decimal, "USD", "Total Booking Payment", PayPalPayment.PAYMENT_INTENT_SALE);
-
-//                PayPalPayment cart = new PayPalPayment(new BigDecimal(m_cart.getValue()), "USD", "Cart",
-//                        PayPalPayment.PAYMENT_INTENT_SALE);
+        PayPalPayment payment = new PayPalPayment(decimal, "USD", "Total Booking Payment for " + diffDays + "Days ", PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(BookingPaymentActivity.this, PaymentActivity.class); // it's not paypalpayment, it's paymentactivity !
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION, m_configuration);
@@ -117,11 +157,6 @@ public class BookingPaymentActivity extends AppCompatActivity {
                         dialog.setTitle("Paypal Payment");
                         dialog.show();
                         dialog.setCancelable(false);
-
-                        Toast.makeText(this, "Approved" + confirmation.getProofOfPayment(), Toast.LENGTH_SHORT).show();
-//                        Log.d("asdf", "onActivityResult: " + confirmation.getProofOfPayment() + "   " + confirmation.getEnvironment());
-//                        Log.d("asdf", "onActivityResult: " + confirmation.describeContents() + "   " + confirmation.toJSONObject());
-//                        Log.d("asdf", "onActivityResult: " + confirmation.getEnvironment() + "  " + confirmation.getPayment());
                         try {
                             paymentmodel = confirmation.toJSONObject().toString(4);
                             model = new Gson().fromJson(paymentmodel, MainPayPalPayment.class);
@@ -146,7 +181,6 @@ public class BookingPaymentActivity extends AppCompatActivity {
     private void getSalesDetails(String pay_id, String access_token) {
         Log.d(TAG, pay_id + "getSalesDetails: " + access_token);
         APIInterface api = APIPayPal.getApiService();
-//        String tok = "Bearer Token " + Base64.encodeToString(access_token.getBytes(), Base64.NO_WRAP);
         String tok = "Bearer " + access_token;
         Call<DetailsMain> call = api.getDetailsPayment(pay_id, tok);
 
@@ -156,21 +190,49 @@ public class BookingPaymentActivity extends AppCompatActivity {
                 dialog.dismiss();
                 Log.d(TAG, "onResponse: aayooooooooooooooooooooooo  ");
                 if (response.isSuccessful()) {
-                    Intent intent = new Intent(BookingPaymentActivity.this, VerificationActivity.class);
-                    intent.putExtra("verificationmodel",new Gson().toJson(response.body()));
-                    startActivity(intent);
-                    Log.d(TAG, "onResponse: " + new Gson().toJson(response.body()));
-                    Toast.makeText(BookingPaymentActivity.this, "Response Ayo" + response.body(), Toast.LENGTH_SHORT).show();
+
+                    Log.d("asldjasdf", "onResponse: " + response.body());
+                    transactidid = response.body().getTransactions().get(0).getRelatedResources().get(0).getSale().getId();
+
+                    APIInterface api = APiClient.getApiService();
+                    Call<BookingPaymentMain> call1 = api.getsavebookingpayment(bookingid, String.valueOf(totalprice), 2, payid, transactidid, "");
+                    call1.enqueue(new Callback<BookingPaymentMain>() {
+                        @Override
+                        public void onResponse(Call<BookingPaymentMain> call, Response<BookingPaymentMain> response) {
+                            if (response.isSuccessful()) {
+                                Log.d("pppp", "onResponse: " + new Gson().toJson(response.body()));
+
+                                Intent intent = new Intent(BookingPaymentActivity.this, VerificationActivity.class);
+                                BookingPaymentModel paymentModel = response.body().getData();
+
+                                BookingPaymentWithHotelDetails bookingPaymentWithHotelDetails = new BookingPaymentWithHotelDetails(bookingWithHotelDetails, paymentModel);
+                                intent.putExtra("verificationmodel", new Gson().toJson(bookingPaymentWithHotelDetails));
+                                startActivity(intent);
+                            } else {
+                                Log.d("ppp", "onResponse: " + new Gson().toJson(response.body()));
+
+                            }
+
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<BookingPaymentMain> call, Throwable t) {
+                            Log.d("ppp", "onFailure: " + t);
+                            getSalesDetails(payid, token);
+                        }
+                    });
+
                 } else {
                     Log.d(TAG, "onResponse asdf s:  " + new Gson().toJson(response.body()));
+
                 }
             }
 
             @Override
             public void onFailure(Call<DetailsMain> call, Throwable t) {
-                getSalesDetails(payid,token);
+                getSalesDetails(payid, token);
                 Log.d("abcccd", "onFailure: " + t);
-                Toast.makeText(BookingPaymentActivity.this, "Faile vayoooo", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -181,7 +243,6 @@ public class BookingPaymentActivity extends AppCompatActivity {
         call.enqueue(new Callback<TokenModel>() {
             @Override
             public void onResponse(Call<TokenModel> call, Response<TokenModel> response) {
-                Toast.makeText(BookingPaymentActivity.this, "Response", Toast.LENGTH_SHORT).show();
                 Log.d("abcccd", new Gson().toJson(response.body().getAccessToken()));
                 token = response.body().getAccessToken();
 
@@ -192,8 +253,29 @@ public class BookingPaymentActivity extends AppCompatActivity {
             public void onFailure(Call<TokenModel> call, Throwable t) {
                 getAccessTokensss(auth);
                 Log.d("abccc", "onFailure: " + t);
-                Toast.makeText(BookingPaymentActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    boolean doubleBackToExitPressedOnce = false;
+
+    @Override
+    public void onBackPressed() {
+
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 }

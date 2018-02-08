@@ -1,6 +1,7 @@
 package com.example.sanjay.traveljinee.HotelList.Fragment.ReviewFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sanjay.traveljinee.Model.HotelList.HotelDetail;
 import com.example.sanjay.traveljinee.Model.HotelRating.RatingMain;
 import com.example.sanjay.traveljinee.Model.HotelRating.UserRating.UserRating;
 import com.example.sanjay.traveljinee.Model.HotelRating.UserRating.UserRatingMain;
@@ -27,6 +29,7 @@ import com.example.sanjay.traveljinee.NonScrollListView;
 import com.example.sanjay.traveljinee.R;
 import com.example.sanjay.traveljinee.Retrofit.APIInterface;
 import com.example.sanjay.traveljinee.Retrofit.APiClient;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -48,11 +51,20 @@ public class ReviewFragment extends Fragment {
     NonScrollListView guestreview;
     TextView totalviews;
     TextView averagerate;
+    HotelDetail hotelDetail;
+    TextView guestreviewww;
+    ProgressDialog dialog;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.review_fragment, null);
+
+        dialog = new ProgressDialog(getContext());
+        dialog.setCancelable(false);
+        dialog.setTitle("Loading");
+        dialog.setMessage("Loading Hotel List. Please Wait...");
+        dialog.show();
 
         ScrollView scrollView = (ScrollView) view.findViewById(R.id.scrollview);
         LinearLayout temp = view.findViewById(R.id.temp);
@@ -64,25 +76,26 @@ public class ReviewFragment extends Fragment {
                 ((ScrollView) view.findViewById(R.id.scrollview)).fullScroll(View.FOCUS_UP);
             }
         });
+        guestreviewww = view.findViewById(R.id.guestreviewww);
 
         averagerate = (TextView) view.findViewById(R.id.average);
         linearlayout = view.findViewById(R.id.linearlayout);
         guestreview = (NonScrollListView) view.findViewById(R.id.guestreview);
         guestreview.setFocusable(false);
 
+
         totalviews = (TextView) view.findViewById(R.id.totalviews);
         totalviews.setPaintFlags(totalviews.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         if (getArguments() != null) {
             String mParam1 = getArguments().getString("params");
-            Log.d("asdf", "onCreateView: " + mParam1);
+            hotelDetail = new Gson().fromJson(mParam1, HotelDetail.class);
 
             hotelid = getArguments().getInt("hotelid");
             Log.d("asdf", "onCreateView: " + hotelid);
 
             getRatingOverview();
         }
-
 
 
 //
@@ -199,6 +212,8 @@ public class ReviewFragment extends Fragment {
             public void onResponse(Call<RatingMain> call, Response<RatingMain> response) {
                 if (response.isSuccessful()) {
                     for (int i = 0; i < response.body().getData().size(); i++) {
+
+
                         LinearLayout layout = new LinearLayout(getContext());
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         layout.setOrientation(LinearLayout.HORIZONTAL);
@@ -219,23 +234,23 @@ public class ReviewFragment extends Fragment {
                         progressBar.setMax(10);
 //                        progressBar.startAnimation(anim);
                         float rating = response.body().getData().get(i).getRating();
-                        progressBar.setProgress((int)rating);
+                        progressBar.setProgress((int) rating);
                         LinearLayout.LayoutParams progress = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1.7f);
                         progressBar.setLayoutParams(progress);
                         layout.addView(progressBar);
 
                         TextView ratingtext = new TextView(getContext());
                         ratingtext.setText(String.valueOf(rating));
-                        LinearLayout.LayoutParams textparam = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT,0.5f);
+                        LinearLayout.LayoutParams textparam = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 0.5f);
                         ratingtext.setGravity(Gravity.CENTER);
                         ratingtext.setLayoutParams(textparam);
                         layout.addView(ratingtext);
 
 
-                        totalviews.setText(String.valueOf(response.body().getData().get(i).getCountUsers())+" Views");
+                        totalviews.setText(String.valueOf(response.body().getData().get(i).getCountUsers()) + " Views");
                         String average = String.valueOf(response.body().getData().get(i).getTotalRating());
                         float avg = Float.parseFloat(average);
-                        averagerate.setText(String.format("%.01f",avg));
+                        averagerate.setText(String.format("%.01f", avg));
                     }
 
                     getUserOffer();
@@ -245,7 +260,7 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<RatingMain> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }
@@ -256,9 +271,14 @@ public class ReviewFragment extends Fragment {
         call.enqueue(new Callback<UserRatingMain>() {
             @Override
             public void onResponse(Call<UserRatingMain> call, Response<UserRatingMain> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
+                    dialog.dismiss();
+                    if (response.body().getData().size() == 0) {
+                        guestreviewww.setText("No Guest Reviews");
+                    }
+
                     List<UserRating> list = new ArrayList<>();
-                    for(int i=0;i<response.body().getData().size();i++){
+                    for (int i = 0; i < response.body().getData().size(); i++) {
                         list.add(response.body().getData().get(i));
                     }
 
@@ -268,7 +288,7 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<UserRatingMain> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }

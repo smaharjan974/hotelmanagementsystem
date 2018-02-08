@@ -141,10 +141,11 @@
             </android.support.design.widget.TextInputLayout>
 
             <CheckBox
+                android:id="@+id/checkbox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/largepadding"
-                android:text="Save your details for future bookings"
+                android:text="Use Logged In Information"
                 />
 
             <TextView
@@ -157,6 +158,7 @@
                 />
 
             <EditText
+                android:id="@+id/specialrequest"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/normalheight"
                 android:layout_marginTop="@dimen/smallpadding"

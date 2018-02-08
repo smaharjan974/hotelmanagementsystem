@@ -1,6 +1,7 @@
 package com.example.sanjay.traveljinee.HotelList.Fragment.MapFragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,13 +44,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     int hotelid;
     double longittude,lattitude;
     String hotelname;
+    ProgressDialog dialog;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         if(googleServiceAvailable()){
-            Toast.makeText(getActivity(), "Perfect", Toast.LENGTH_SHORT).show();
             view = inflater.inflate(R.layout.map_fragment, null);
+
+            dialog = new ProgressDialog(getContext());
+            dialog.setCancelable(false);
+            dialog.setTitle("Loading");
+            dialog.setMessage("Loading Hotel List. Please Wait...");
+            dialog.show();
 
             if (getArguments() != null) {
                 String  mParam1 = getArguments().getString("params");
@@ -110,18 +117,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onResponse(Call<HotelDetailsMain> call, Response<HotelDetailsMain> response) {
                 if(response.isSuccessful()){
-                    longittude = response.body().getData().getLongitude();
-                    lattitude = response.body().getData().getLatitude();
-                    hotelname = response.body().getData().getHotelName();
+                    dialog.dismiss();
+                   if(response.body().getData()==null){
 
-                    map.addMarker(new MarkerOptions().position(new LatLng(lattitude,longittude)).title(hotelname));
-                    gotolocation(lattitude,longittude,15);
+                   }else {
+                       longittude = response.body().getData().getLongitude();
+                       lattitude = response.body().getData().getLatitude();
+                       hotelname = response.body().getData().getHotelName();
+
+                       map.addMarker(new MarkerOptions().position(new LatLng(lattitude,longittude)).title(hotelname));
+                       gotolocation(lattitude,longittude,15);
+                   }
                 }
             }
 
             @Override
             public void onFailure(Call<HotelDetailsMain> call, Throwable t) {
-
+                dialog.dismiss();
             }
         });
     }

@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.example.sanjay.traveljinee.CustomModel.HotelDetailsWithModel;
+import com.example.sanjay.traveljinee.CustomModel.HotelDetailsWithModelRoomDeal;
+import com.example.sanjay.traveljinee.CustomModel.RoomDealModel;
 import com.example.sanjay.traveljinee.Model.RoomDeal.RoomDeal;
 import com.example.sanjay.traveljinee.Model.RoomDeal.RoomDealMain;
 import com.example.sanjay.traveljinee.NonScrollListView;
@@ -45,6 +48,11 @@ public class DealFragment extends Fragment {
     List<RoomDeal> list;
 
     ProgressDialog dialog;
+    List<String> feat,serv;
+    NonScrollListView listView;
+
+    HotelDetailsWithModel hotelDetailsWithModel;
+    List<HotelDetailsWithModelRoomDeal> hotelDetailsWithModelRoomDeal;
 
     @Nullable
     @Override
@@ -57,7 +65,7 @@ public class DealFragment extends Fragment {
         dialog.setMessage("Loading Hotel List. Please Wait...");
         dialog.show();
 
-        NonScrollListView listView = (NonScrollListView) view.findViewById(R.id.lstview);
+        listView = (NonScrollListView) view.findViewById(R.id.lstview);
         listView.setFocusable(false);
         LinearLayout temp = view.findViewById(R.id.temp);
         temp.requestFocus();
@@ -73,10 +81,12 @@ public class DealFragment extends Fragment {
 
         if (getArguments() != null) {
             String mParam1 = getArguments().getString("params");
-//            Log.d("asdf", "onCreateView: " + mParam1);
+            hotelDetailsWithModel = new Gson().fromJson(mParam1,HotelDetailsWithModel.class);
 
             hotelid = getArguments().getInt("hotelid");
             Log.d("asdf", "onCreateView: " + hotelid);
+
+
 
             APIInterface api = APiClient.getApiService();
             Call<RoomDealMain> call = api.getRoomdealbyHotelid(hotelid);
@@ -91,33 +101,43 @@ public class DealFragment extends Fragment {
                         List<String> facilityList = new ArrayList<>();
                         List<String> serviceList = new ArrayList<>();
 
-
-                        //Log.d("fsgsd", "onResponse: " + String.valueOf(uniquify(response.body().getData().).size()));
-
                         for(int i = 0;i<response.body().getData().size();i++){
                             roomidlist.add(response.body().getData().get(i).getRoomId());
-//                            facilityList.add(response.body().getData().get(i).getFacilityName());
-//                            serviceList.add(response.body().getData().get(i).getFacilityName());
+                            if(response.body().getData().get(i).getCost()==0) {
+                                facilityList.add(response.body().getData().get(i).getFacilityName());
+                            }else {
+                                serviceList.add(response.body().getData().get(i).getFacilityName());
+                            }
                         }
-//                        Log.d("fsgsds", "onResponse: " + new Gson().toJson(facilityList));
-                        for (int i = 0; i<uniquify(roomidlist).size();i++){
+                        feat = uniquifyfeatures(facilityList);
+                        serv = uniquifyfeatures(serviceList);
+
+                        List<RoomDealModel> model = new ArrayList<>();
+                        hotelDetailsWithModelRoomDeal = new ArrayList<>();
+                        for(int i=0;i<uniquify(roomidlist).size();i++){
                             int roomid= uniquify(roomidlist).get(i);
-
-
-                            if(response.body().getData().get(i).getRoomId()== roomid){
-                                ////facilityList.add()
+                            String roomtype = null,sleep=null,bed=null,price=null;
+                            for(int j=0;j<response.body().getData().size();j++){
+                                if(roomid==response.body().getData().get(j).getRoomId()){
+                                     roomtype = response.body().getData().get(j).getRoomTypeName();
+                                     sleep = response.body().getData().get(j).getMaxOccupancy().toString();
+                                     bed = response.body().getData().get(j).getNoOfBed().toString();
+                                     price = response.body().getData().get(j).getPricePerday().toString();
+                                }else {
+                                    //do nothing
+                                }
                             }
 
+                            Log.d("roomid", "onResponse: "+response.body().getData().get(i).getRoomTypeId());
+
+                            model.add(new RoomDealModel(hotelid, response.body().getData().get(i).getRoomTypeId(),roomtype,sleep,bed,feat,serv,price));
+                            hotelDetailsWithModelRoomDeal.add(new HotelDetailsWithModelRoomDeal(hotelDetailsWithModel,new RoomDealModel(hotelid,response.body().getData().get(i).getRoomTypeId(),roomtype,sleep,bed,feat,serv,price)));
                         }
-
-
-
-                        Log.d("fsgsd", "onResponse: " + String.valueOf(uniquify(roomidlist).size()));
+                        listView.setAdapter(new MyListViewAdapter(getActivity(), hotelDetailsWithModelRoomDeal));
 
                     } else {
                         Log.d("asdf", "onResponse:  failed");
                     }
-
                 }
 
                 @Override
@@ -129,44 +149,6 @@ public class DealFragment extends Fragment {
 
         }
 
-
-        features = new ArrayList<>();
-        features.add("Room with a view");
-        features.add("Mountain View");
-        features.add("Landmark view");
-        features.add("City view");
-
-        featuers1 = new ArrayList<>();
-        featuers1.add("Room with a view");
-        featuers1.add("Mountain view");
-
-        services = new ArrayList<>();
-        services.add("Has a balcony");
-        services.add("Very good breakfast included in the price.");
-        services.add("FREE cancellation before 21 dec");
-        services.add("NO PAYMENT NEEDED - pay at the property");
-
-        services1 = new ArrayList<>();
-        services1.add("Has a balcony");
-        services1.add("Very good breakfast included in the price.");
-        services1.add("FREE cancellation before 21 dec");
-
-        modellist = new ArrayList<>();
-        modellist.add(new Model("Double Room", String.valueOf(2), String.valueOf(1), features, services, "good newssasdfa asf", "US$50"));
-        modellist.add(new Model("Deluxe Room", String.valueOf(2), String.valueOf(2), featuers1, services1, "", "US$40"));
-
-
-//        List<String> list = new ArrayList<>();
-//        list.add("Price for 1 Night");
-//        list.add("Price for 2 Night");
-//        list.add("Price for 3 Night");
-//        list.add("Price for 3 Night");
-//        list.add("Price for 3 Night");
-//        list.add("Price for 3 Night");
-
-        listView.setAdapter(new MyListViewAdapter(getActivity(), modellist));
-
-        mcall.send_deal_fragment_dteials("9849805388");
 
         return view;
     }
@@ -199,6 +181,17 @@ public class DealFragment extends Fragment {
         List<Integer> original = list;
         List<Integer> uniques = new ArrayList<Integer>();
         for (Integer element : original) {
+            if (!uniques.contains(element)) {
+                uniques.add(element);
+            }
+        }
+        return uniques;
+    }
+
+    public List<String> uniquifyfeatures(List<String> list) {
+        List<String> original = list;
+        List<String> uniques = new ArrayList<String>();
+        for (String element : original) {
             if (!uniques.contains(element)) {
                 uniques.add(element);
             }
